@@ -13,6 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../../cpu/rtl/cpu_cfig.h"
+`include "tdt_dmi_define.h"
+
 `ifdef TDT_DM_EXT_TRIGGER_EN
   `define TDT_DM_GROUP_TRI_EN
 `else

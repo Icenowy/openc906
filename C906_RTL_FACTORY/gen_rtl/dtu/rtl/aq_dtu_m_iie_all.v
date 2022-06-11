@@ -13,6 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../dtu/rtl/aq_dtu_cfig.h"
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../tdt/rtl/top/tdt_define.h"
+
 // &ModuleBeg; @21
 module aq_dtu_m_iie_all(
   cp0_dtu_icg_en,

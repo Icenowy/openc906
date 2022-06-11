@@ -12,6 +12,11 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+`include "../../dtu/rtl/aq_dtu_cfig.h"
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../tdt/rtl/top/tdt_define.h"
+
 module aq_dtu_trigger_module(
   cp0_dtu_addr,
   cp0_dtu_icg_en,

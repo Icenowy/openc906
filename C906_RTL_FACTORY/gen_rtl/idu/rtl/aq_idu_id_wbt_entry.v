@@ -13,6 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../idu/rtl/aq_idu_cfig.h"
+
 // &Depend("aq_idu_cfig.h"); @23
 // &ModuleBeg; @24
 module aq_idu_id_wbt_entry(

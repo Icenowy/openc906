@@ -13,6 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../idu/rtl/aq_idu_cfig.h"
+
 // &Depend("aq_idu_cfig.h"); @25
 // &ModuleBeg; @26
 module aq_vidu_vid_ctrl_fp(

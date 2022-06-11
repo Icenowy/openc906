@@ -12,6 +12,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+`include "../top/tdt_define.h"
+`include "../top/tdt_dmi_define.h"
+
 module tdt_dtm_idr #(
     parameter                           DTM_IRREG_WIDTH   = 5,
     parameter                           DTM_ABITS         = 16,    

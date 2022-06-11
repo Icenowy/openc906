@@ -13,6 +13,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../cpu/rtl/cpu_cfig.h"
+
 // &ModuleBeg; @23
 module aq_cp0_info_csr(
   biu_cp0_coreid,

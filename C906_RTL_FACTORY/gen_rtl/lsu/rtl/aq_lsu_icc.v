@@ -13,6 +13,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../lsu/rtl/aq_lsu_cfig.h"
+`include "../../cpu/rtl/cpu_cfig.h"
+
 // &Depend("cpu_cfig.h"); @18
 // &Depend("aq_lsu_cfig.h"); @19
 

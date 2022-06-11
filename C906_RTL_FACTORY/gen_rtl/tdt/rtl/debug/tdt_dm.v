@@ -12,6 +12,9 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+`include "../top/tdt_define.h"
+
 module tdt_dm #(
     parameter                   APB_AW                = 12,
     parameter                   CORE_NUM              = `TDT_DM_CORE_NUM,

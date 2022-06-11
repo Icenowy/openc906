@@ -13,6 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../idu/rtl/aq_idu_cfig.h"
+`include "../../dtu/rtl/aq_dtu_cfig.h"
+
 // &Depend("aq_idu_cfig.h"); @26
 // &Depend("aq_dtu_cfig.h"); @27
 // &ModuleBeg; @28

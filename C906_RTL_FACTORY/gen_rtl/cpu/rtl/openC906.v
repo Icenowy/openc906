@@ -35,6 +35,9 @@ limitations under the License.
 // &Depend("tdt_sba_axi.v"); @44
 // &Depend("tdt_sba_ahb.v"); @47
 
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../tdt/rtl/top/tdt_define.h"
+
 // &ModuleBeg; @50
 module openC906(
   axim_clk_en,
