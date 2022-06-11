@@ -194,7 +194,6 @@ ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_frac_shift_double.v
 ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_lza_double.v
 ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_mult.v
 ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_mult_double.v
-${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_multiplier_53x27_partial.v
 ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_special_judge_double.v
 ${CODE_BASE_PATH}/gen_rtl/vfmau/rtl/aq_vfmau_top.v
 ${CODE_BASE_PATH}/gen_rtl/vidu/rtl/aq_vidu_top.v
@@ -226,7 +225,6 @@ ${CODE_BASE_PATH}/gen_rtl/plic/rtl/csky_apb_1tox_matrix.v
 ${CODE_BASE_PATH}/gen_rtl/fpga/rtl/fpga_ram.v
 ${CODE_BASE_PATH}/gen_rtl/clk/rtl/gated_clk_cell.v
 ${CODE_BASE_PATH}/gen_rtl/cpu/rtl/mp_top_golden_port.v
-${CODE_BASE_PATH}/gen_rtl/iu/rtl/multiplier_33x33_partial.v
 ${CODE_BASE_PATH}/gen_rtl/plic/rtl/plic_32to1_arb.v
 ${CODE_BASE_PATH}/gen_rtl/plic/rtl/plic_arb_ctrl.v
 ${CODE_BASE_PATH}/gen_rtl/plic/rtl/plic_ctrl.v
