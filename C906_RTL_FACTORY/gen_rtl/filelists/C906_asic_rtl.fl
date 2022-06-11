@@ -4,7 +4,6 @@ ${CODE_BASE_PATH}/gen_rtl/dtu/rtl/aq_dtu_cfig.h
 ${CODE_BASE_PATH}/gen_rtl/lsu/rtl/aq_lsu_cfig.h
 ${CODE_BASE_PATH}/gen_rtl/mmu/rtl/sysmap.h
 ${CODE_BASE_PATH}/gen_rtl/tdt/rtl/top/tdt_define.h
-${CODE_BASE_PATH}/gen_rtl/common/rtl/BUFGCE.v
 ${CODE_BASE_PATH}/gen_rtl/biu/rtl/aq_biu_apbif.v
 ${CODE_BASE_PATH}/gen_rtl/biu/rtl/aq_biu_read_channel.v
 ${CODE_BASE_PATH}/gen_rtl/biu/rtl/aq_biu_req_arbiter.v
