@@ -17,6 +17,8 @@ limitations under the License.
 // &Depend("aq_lsu_cfig.h"); @18
 
 // &ModuleBeg; @20
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../lsu/rtl/aq_lsu_cfig.h"
 module aq_lsu_rdl(
   arb_rdl_grant,
   cp0_lsu_icg_en,

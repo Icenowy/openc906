@@ -12,6 +12,8 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+`include "../../tdt/rtl/top/tdt_define.h"
+`include "../../dtu/rtl/aq_dtu_cfig.h"
 module aq_dtu_mcontrol_output_select(
   action0_mcontrol,
   action1_mcontrol,

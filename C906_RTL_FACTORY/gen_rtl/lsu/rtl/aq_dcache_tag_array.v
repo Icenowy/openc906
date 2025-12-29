@@ -17,6 +17,8 @@ limitations under the License.
 // &Depend("aq_lsu_cfig.h"); @19
 
 // &ModuleBeg; @21
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../lsu/rtl/aq_lsu_cfig.h"
 module aq_dcache_tag_array(
   cp0_lsu_icg_en,
   forever_cpuclk,

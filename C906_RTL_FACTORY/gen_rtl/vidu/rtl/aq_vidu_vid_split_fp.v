@@ -15,6 +15,7 @@ limitations under the License.
 
 // &Depend("aq_idu_cfig.h"); @23
 // &ModuleBeg; @24
+`include "../../idu/rtl/aq_idu_cfig.h"
 module aq_vidu_vid_split_fp(
   cp0_idu_icg_en,
   cp0_yy_clk_en,

@@ -16,6 +16,8 @@ limitations under the License.
 // &Depend("cpu_cfig.h"); @18
 
 // &ModuleBeg; @20
+`include "../../cpu/rtl/cpu_cfig.h"
+`include "../../lsu/rtl/aq_lsu_cfig.h"
 module aq_vlsu_vtb(
   cp0_vpu_icg_en,
   cpurst_b,
