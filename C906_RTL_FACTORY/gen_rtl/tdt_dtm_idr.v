@@ -28,6 +28,7 @@ module tdt_dtm_idr #(
     output     [CHAIN_DW-1:0]           idr_chain_dr, 
     output     [DTM_IRREG_WIDTH-1:0]    idr_chain_ir, 
     input      [CHAIN_DW-1:0]           chain_idr_data,
+    input      [DTM_IRREG_WIDTH-1:0]    ir_in,
     output                              idr_dmi_mode,     
     input                               ctrl_idr_update_ir,       
     input                               ctrl_idr_update_dr,
@@ -76,7 +77,7 @@ module tdt_dtm_idr #(
         else if (dmihardreset)
             dtm_ir[DTM_IRREG_WIDTH-1:0] <= IDCODE;
         else if (ctrl_idr_update_ir) 
-            dtm_ir[DTM_IRREG_WIDTH-1:0] <= chain_idr_data[DTM_IRREG_WIDTH-1:0];
+            dtm_ir[DTM_IRREG_WIDTH-1:0] <= ir_in;
      
     end
     
@@ -193,15 +194,7 @@ module tdt_dtm_idr #(
     //    end
     //endgenerate
 
-    always @ (dtm_ir[DTM_IRREG_WIDTH-1:0] or
-              dtm_idcode[DTM_NDMIREG_WIDTH-1:0] or
-              mode or
-              idle[2:0] or
-              dmistat[1:0] or
-              abits[5:0] or
-              version[3:0] or
-              dmi_total[CHAIN_DW-1:0]
-              ) begin
+    always @* begin
         case (dtm_ir[DTM_IRREG_WIDTH-1:0])
             IDCODE  : data_out[CHAIN_DW-1:0] = {{CHAIN_DW-DTM_NDMIREG_WIDTH{1'b0}}, dtm_idcode[DTM_NDMIREG_WIDTH-1:0]};
             DMI_ACC : data_out[CHAIN_DW-1:0] = {{CHAIN_DW-1{1'b0}}, mode};

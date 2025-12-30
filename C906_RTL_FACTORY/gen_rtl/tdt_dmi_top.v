@@ -81,7 +81,6 @@ tdt_dmi_rst_top x_tdt_dmi_rst_top (
 tdt_dmi x_tdt_dmi (
     .sys_apb_clk(sys_apb_clk),
     .sys_apb_rst_b(sync_sys_apb_rst_b),
-    .pad_tdt_dtm_tclk(pad_tdt_dtm_tclk),
     .pad_tdt_dtm_trst_b(pad_tdt_dtm_trst_b),
     .pad_tdt_dtm_jtag2_sel(pad_tdt_dtm_jtag2_sel),         
     .pad_tdt_dtm_tap_en(pad_tdt_dtm_tap_en),        

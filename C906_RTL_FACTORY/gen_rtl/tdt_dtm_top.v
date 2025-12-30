@@ -17,7 +17,7 @@ limitations under the License.
 module tdt_dtm_top #(
     parameter                        DTM_ABITS = 16
 )(
-    input                            pad_dtm_tclk,
+    output                           pad_dtm_tclk,
     input                            pad_dtm_trst_b,
     input                            pad_dtm_jtag2_sel,         
     input                            pad_dtm_tap_en,        
@@ -61,87 +61,81 @@ module tdt_dtm_top #(
     wire  [DTM_IRREG_WIDTH-1:0]          idr_chain_ir; 
     wire  [CHAIN_DW-1:0]                 chain_idr_data;      
 
-    tdt_dtm_io x_tdt_dtm_io (      
-        .pad_dtm_jtag2_sel               (pad_dtm_jtag2_sel),         
-        .pad_dtm_tap_en                  (pad_dtm_tap_en),        
-        .pad_dtm_tdi                     (pad_dtm_tdi),           
-        .pad_dtm_tms_i                   (pad_dtm_tms_i),  
-        .dtm_pad_tdo                     (dtm_pad_tdo),           
-        .dtm_pad_tdo_en                  (dtm_pad_tdo_en),        
-        .dtm_pad_tms_o                   (dtm_pad_tms_o),         
-        .dtm_pad_tms_oe                  (dtm_pad_tms_oe),        
-        .chain_io_tdo                    (chain_io_tdo),             
-        .ctrl_io_tdo_en                  (ctrl_io_tdo_en),              
-        .ctrl_io_tms_oe                  (ctrl_io_tms_oe),                          
-        .io_chain_tdi                    (io_chain_tdi),             
-        .io_ctrl_tap_en                  (io_ctrl_tap_en)
-    );
-    
-    tdt_dtm_ctrl #(
-        .DTM_ABITS                       (DTM_ABITS[5:0]),   
-        .DTM_NDMIREG_WIDTH               (DTM_NDMIREG_WIDTH[7:0]),
-        .DTM_IRREG_WIDTH                 (DTM_IRREG_WIDTH[7:0]),
-        .DTM_FSM2_RSTCNT                 (DTM_FSM2_RSTCNT[6:0])
-    ) x_tdt_dtm_ctrl (
-        .tclk                            (pad_dtm_tclk),                    
-        .trst_b                          (pad_dtm_trst_b),
-        .dmihardreset                    (dmihardreset), 
-        .io_ctrl_tap_en                  (io_ctrl_tap_en),            
-        .pad_dtm_jtag2_sel               (pad_dtm_jtag2_sel),       
-        .pad_dtm_tms_i                   (pad_dtm_tms_i),   
-        .idr_dmi_mode                    (idr_dmi_mode),                    
-        .ctrl_io_tdo_en                  (ctrl_io_tdo_en),            
-        .ctrl_io_tms_oe                  (ctrl_io_tms_oe),            
-        .ctrl_chain_capture_dr           (ctrl_chain_capture_dr), 
-        .ctrl_chain_capture_ir           (ctrl_chain_capture_ir),     
-        .ctrl_idr_update_ir              (ctrl_idr_update_ir),       
-        .ctrl_idr_update_dr              (ctrl_idr_update_dr),
-        .ctrl_idr_capture_dr             (ctrl_idr_capture_dr),
-        .ctrl_chain_shift_dr             (ctrl_chain_shift_dr),      
-        .ctrl_chain_shift_ir             (ctrl_chain_shift_ir),      
-        .ctrl_chain_shift_par            (ctrl_chain_shift_par),     
-        .ctrl_chain_shift_sync           (ctrl_chain_shift_sync)
-    );
-    
+	wire [DTM_IRREG_WIDTH-1:0] ir_in;
+	wire [DTM_IRREG_WIDTH-1:0] ir_out;
+	wire capture_dr, shift_dr, update_dr, capture_ir, update_ir;
+	wire tdi, tdo, tck;
+
+	assign ir_out = ir_in;
+
+	sld_virtual_jtag #(
+		.sld_auto_instance_index ("NO"),
+		.sld_instance_index      (0),
+		.sld_ir_width            (DTM_IRREG_WIDTH)
+	) vjtag (
+		.tdi                (tdi),
+		.tdo                (tdo),
+		.ir_in              (ir_in),
+		.ir_out             (ir_out),
+		.virtual_state_cdr  (virtual_state_cdr),
+		.virtual_state_sdr  (virtual_state_sdr),
+		.virtual_state_e1dr (virtual_state_e1dr),
+		.virtual_state_pdr  (virtual_state_pdr),
+		.virtual_state_e2dr (virtual_state_e2dr),
+		.virtual_state_udr  (virtual_state_udr),
+		.virtual_state_cir  (virtual_state_cir),
+		.virtual_state_uir  (virtual_state_uir),
+		.tck                (tck)
+	);
+
+	assign capture_dr = virtual_state_cdr;
+	assign shift_dr = virtual_state_sdr;
+	assign update_dr = virtual_state_udr;
+	assign capture_ir = virtual_state_cir;
+	assign update_ir = virtual_state_uir;
+
+	 assign pad_dtm_tclk = tck;
+
     tdt_dtm_chain #(
-        .CHAIN_DW                        (CHAIN_DW),          
-        .DTM_IRREG_WIDTH                 (DTM_IRREG_WIDTH),   
-        .DTM_ABITS                       (DTM_ABITS),             
-        .DTM_NDMIREG_WIDTH               (DTM_NDMIREG_WIDTH) 
+        .CHAIN_DW                        (CHAIN_DW),
+        .DTM_IRREG_WIDTH                 (DTM_IRREG_WIDTH),
+        .DTM_ABITS                       (DTM_ABITS),
+        .DTM_NDMIREG_WIDTH               (DTM_NDMIREG_WIDTH)
     ) x_tdt_dtm_chain (
-        .tclk                            (pad_dtm_tclk),                 
-        .trst_b                          (pad_dtm_trst_b),   
-        .dmihardreset                    (dmihardreset), 
-        .io_chain_tdi                    (io_chain_tdi),
-        .chain_io_tdo                    (chain_io_tdo),
-        .idr_chain_dr                    (idr_chain_dr), 
-        .idr_chain_ir                    (idr_chain_ir), 
-        .chain_idr_data                  (chain_idr_data),      
+        .tclk                            (tck),
+        .trst_b                          (1'b1),
+        .dmihardreset                    (dmihardreset),
+        .io_chain_tdi                    (tdi),
+        .chain_io_tdo                    (tdo),
+        .idr_chain_dr                    (idr_chain_dr),
+        .idr_chain_ir                    (idr_chain_ir),
+        .chain_idr_data                  (chain_idr_data),
         .idr_dmi_mode                    (idr_dmi_mode),
-        .ctrl_chain_capture_dr           (ctrl_chain_capture_dr),  
-        .ctrl_chain_capture_ir           (ctrl_chain_capture_ir),    
-        .ctrl_chain_shift_dr             (ctrl_chain_shift_dr),      
-        .ctrl_chain_shift_ir             (ctrl_chain_shift_ir),      
-        .ctrl_chain_shift_par            (ctrl_chain_shift_par),     
-        .ctrl_chain_shift_sync           (ctrl_chain_shift_sync)
+        .ctrl_chain_capture_dr           (capture_dr),
+        .ctrl_chain_capture_ir           (capture_ir),
+        .ctrl_chain_shift_dr             (shift_dr),
+        .ctrl_chain_shift_ir             (1'b0),
+        .ctrl_chain_shift_par            (1'b0),
+        .ctrl_chain_shift_sync           (1'b0)
     );
-    
+
     tdt_dtm_idr #(
-        .CHAIN_DW                        (CHAIN_DW),          
-        .DTM_IRREG_WIDTH                 (DTM_IRREG_WIDTH),   
-        .DTM_ABITS                       (DTM_ABITS[5:0]),             
-        .DTM_NDMIREG_WIDTH               (DTM_NDMIREG_WIDTH) 
+        .CHAIN_DW                        (CHAIN_DW),
+        .DTM_IRREG_WIDTH                 (DTM_IRREG_WIDTH),
+        .DTM_ABITS                       (DTM_ABITS),
+        .DTM_NDMIREG_WIDTH               (DTM_NDMIREG_WIDTH)
     ) x_tdt_dtm_idr (
-        .tclk                            (pad_dtm_tclk),                 
-        .trst_b                          (pad_dtm_trst_b),
-        .dmihardreset                    (dmihardreset), 
-        .idr_chain_dr                    (idr_chain_dr), 
-        .idr_chain_ir                    (idr_chain_ir), 
-        .idr_dmi_mode                    (idr_dmi_mode),                    
-        .chain_idr_data                  (chain_idr_data), 
-        .ctrl_idr_update_ir              (ctrl_idr_update_ir),       
-        .ctrl_idr_update_dr              (ctrl_idr_update_dr),
-        .ctrl_idr_capture_dr             (ctrl_idr_capture_dr),
+        .tclk                            (tck),
+        .trst_b                          (1'b1),
+        .dmihardreset                    (dmihardreset),
+        .idr_chain_dr                    (idr_chain_dr),
+        .idr_chain_ir                    (idr_chain_ir),
+        .idr_dmi_mode                    (idr_dmi_mode),
+        .chain_idr_data                  (chain_idr_data),
+        .ir_in                           (ir_in),
+        .ctrl_idr_update_ir              (update_ir),
+        .ctrl_idr_update_dr              (update_dr),
+        .ctrl_idr_capture_dr             (capture_dr),
         .dtm_apbm_wr_vld                 (dtm_apbm_wr_vld),
         .dtm_apbm_wr_addr                (dtm_apbm_wr_addr),
         .dtm_apbm_wr_flg                 (dtm_apbm_wr_flg),

@@ -18,7 +18,6 @@ limitations under the License.
 module tdt_dmi (
     sys_apb_clk,
     sys_apb_rst_b,
-    pad_tdt_dtm_tclk,
     pad_tdt_dtm_trst_b,
     pad_tdt_dtm_jtag2_sel,         
     pad_tdt_dtm_tap_en,        
@@ -57,7 +56,6 @@ module tdt_dmi (
 
     input                                     sys_apb_clk;
     input                                     sys_apb_rst_b;
-    input                                     pad_tdt_dtm_tclk;
     input                                     pad_tdt_dtm_trst_b;
     input                                     pad_tdt_dtm_jtag2_sel;         
     input                                     pad_tdt_dtm_tap_en;        
@@ -136,6 +134,7 @@ module tdt_dmi (
     wire    [31:0]                            apbm_dtm_rdata;
     wire                                      apbm_dtm_wr_ready;
 
+    wire                                      pad_tdt_dtm_tclk;
     wire                                      apb_icg_en;
     assign apb_icg_en = 1'b0;
 
@@ -172,7 +171,7 @@ tdt_apb_master #(
     .SLAVE_NUM                        (`TDT_DMI_SLAVE_NUM)
 ) x_tdt_apb_master ( 
     .tck                              (pad_tdt_dtm_tclk),
-    .trst_b                           (pad_tdt_dtm_trst_b),
+    .trst_b                           (sys_apb_rst_b),
     .cmd_vld                          (dtm_apbm_wr_vld),
     .addr                             (dtm_apbm_wr_addr),
     .wr_flg                           (dtm_apbm_wr_flg),
