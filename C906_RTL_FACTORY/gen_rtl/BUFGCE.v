@@ -23,18 +23,10 @@ input  I;
 input  CE ;
 output O;
 
-reg    clk_en_af_latch;
-always @(I or CE)
-begin
-  if(!I)
-    clk_en_af_latch <= CE;
-end
+altclkctrl bufgce_alt(
+	.ena(CE),
+	.inclk({I}),
+	.outclk(O)
+);
 
-reg clk_en ;
-always @ (clk_en_af_latch )
-begin
-    clk_en <= clk_en_af_latch;
-end
-assign O = I && clk_en ;
-   
 endmodule   
