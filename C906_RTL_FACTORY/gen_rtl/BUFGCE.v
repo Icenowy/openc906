@@ -23,7 +23,9 @@ input  I;
 input  CE ;
 output O;
 
-altclkctrl bufgce_alt(
+altclkctrl #(
+	.ena_register_mode("falling edge")
+) bufgce_alt(
 	.ena(CE),
 	.inclk({I}),
 	.outclk(O)
